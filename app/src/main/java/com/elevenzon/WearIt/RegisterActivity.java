@@ -18,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView login;
     boolean isNameValid, isEmailValid, isPhoneValid, isPasswordValid;
     TextInputLayout nameError, emailError, phoneError, passError;
-
+    DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailError = (TextInputLayout) findViewById(R.id.emailError);
         phoneError = (TextInputLayout) findViewById(R.id.phoneError);
         passError = (TextInputLayout) findViewById(R.id.passError);
-
+        databaseHelper=new DatabaseHelper(RegisterActivity.this);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,9 +94,16 @@ public class RegisterActivity extends AppCompatActivity {
             isPasswordValid = true;
             passError.setErrorEnabled(false);
         }
-
+        System.out.println(databaseHelper.getAllUser());
         if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid) {
-            Toast.makeText(getApplicationContext(), "Successfully", Toast.LENGTH_SHORT).show();
+           databaseHelper=new DatabaseHelper(RegisterActivity.this);
+           User us1= new User();
+           us1.setEmail(email.getText().toString());
+           us1.setPassword(password.getText().toString());
+                databaseHelper.addUser(us1);
+                System.out.println(databaseHelper.getAllUser());
+                Toast.makeText(getApplicationContext(), "Account successfully created ", Toast.LENGTH_LONG).show();
+
         }
 
     }
