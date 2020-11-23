@@ -3,13 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2E3F4"
     tools:context="com.elevenzon.WearIt.MainActivity">
 
-    <TextView
-        android:id="@+id/helloUser"
-        android:layout_width="wrap_content"
+    <!--    <Button-->
+    <!--        android:id="@+id/button_addclothes"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="148dp"-->
+    <!--        android:layout_marginTop="340dp"-->
+    <!--        android:text="Add clothes"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <Button
+        android:id="@+id/button_addclothes"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:ignore="MissingConstraints" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#E4EF60DB"
+        android:hint="Add clothes"
+        android:padding="5dp"
+        android:textColorHint="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_yourclothes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:background="#E4EF60DB"
+        android:hint="Your clothes"
+        android:padding="5dp"
+        android:textColorHint="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_inspiration"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:background="#E4EF60DB"
+        android:hint="Inspiration"
+        android:padding="5dp"
+        android:textColorHint="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

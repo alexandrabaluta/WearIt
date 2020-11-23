@@ -5,11 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +29,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  + " TEXT,"
             + COLUMN_USER_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")";
+
+    private static final String TABLE_IMAGE = "storedImages";
+    private static final String COLUMN_IMAGE_ID = "imageid";
+    private static final String COLUMN_IMAGE_ITEM = "myImage";
+    private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB)";
+
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
     /**
@@ -42,6 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL("INSERT INTO users(email, password) values ('alexandra@yahoo.com','admin1') ");
     }
     @Override
@@ -50,6 +57,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_USER_TABLE);
         // Create tables again
         onCreate(db);
+    }
+
+    /**
+     * method to create image record
+     * @param bmp the bitmap of the image
+     */
+    public void addImage(Bitmap bmp){
+        byte[] data = getBitmapAsByteArray(bmp);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_IMAGE_ITEM, data);
+        db.insert(TABLE_IMAGE, null, cv);
+        db.close();
+        Log.d("testingTag", "Added to database!");
+    }
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
+    }
+
+    /**
+     * method to retrieve image from DB by id
+     * @param i id of image in table
+     * @return bitmap of image
+     */
+    public Bitmap getImage(int i){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String qu = "SELECT "+COLUMN_IMAGE_ITEM+" FROM "+ TABLE_IMAGE +" WHERE "+COLUMN_IMAGE_ID +"=" + i ;
+        Cursor cur = db.rawQuery(qu, null);
+
+        if (cur.moveToFirst()){
+            byte[] imgByte = cur.getBlob(0);
+            cur.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (cur != null && !cur.isClosed()) {
+            cur.close();
+        }
+
+        return null ;
     }
     /**
      * This method is to create user record
