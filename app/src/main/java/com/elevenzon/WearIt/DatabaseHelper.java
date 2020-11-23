@@ -29,6 +29,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  + " TEXT,"
             + COLUMN_USER_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")";
+
+    private static final String TABLE_IMAGE = "storedImages";
+    private static final String COLUMN_IMAGE_ID = "imageid";
+    private static final String COLUMN_IMAGE_ITEM = "myImage";
+    private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB)";
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
     /**
