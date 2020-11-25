@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2E3F4"
+    android:background="@drawable/menu"
     tools:context="com.elevenzon.WearIt.MainActivity">
 
     <!--    <Button-->
@@ -16,13 +16,13 @@
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
+
     <Button
         android:id="@+id/button_addclothes"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="#E4EF60DB"
+        android:layout_marginTop="104dp"
         android:hint="Add clothes"
         android:padding="5dp"
         android:textColorHint="#fff"
@@ -33,11 +33,12 @@
 
     <Button
         android:id="@+id/button_yourclothes"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:background="#E4EF60DB"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="204dp"
+        android:drawableTop="@mipmap/ic_launcher"
         android:hint="Your clothes"
         android:padding="5dp"
         android:textColorHint="#fff"
@@ -51,9 +52,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
-        android:background="#E4EF60DB"
-        android:hint="Inspiration"
+        android:layout_marginTop="488dp"
+        android:hint="@string/inspiration"
         android:padding="5dp"
         android:textColorHint="#fff"
         android:textSize="30sp"
