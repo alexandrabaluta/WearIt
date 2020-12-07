@@ -2,6 +2,7 @@ package com.elevenzon.WearIt;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -62,6 +63,16 @@ public class MyClothes extends AppCompatActivity {
                 Bitmap prevImg = bmpList.get(position);
                 iv.setImageBitmap(prevImg);
                 previewDialog.show();
+                FloatingActionButton edit = findViewById(R.id.fab);
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                            // redirect to EditClothesActivity
+                            Intent intent = new Intent(getApplicationContext(), EditClothesActivity.class);
+                            startActivity(intent);
+                        }
+                });
+
             }
         });
     }
@@ -100,6 +111,7 @@ public class MyClothes extends AppCompatActivity {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return imageView;
+
         }
     }
 }

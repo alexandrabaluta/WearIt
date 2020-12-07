@@ -33,7 +33,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_IMAGE = "storedImages";
     private static final String COLUMN_IMAGE_ID = "imageid";
     private static final String COLUMN_IMAGE_ITEM = "myImage";
-    private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB)";
+    private static final String COLUMN_IMAGE_SEASON="season";
+    private static final String COLUMN_IMAGE_COLOR="color";
+    private static final String COLUMN_IMAGE_TYPE="type";
+    private static final String COLUMN_IMAGE_PATTERN="pattern";
+
+
+
+
+    private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB,"+
+            COLUMN_IMAGE_SEASON+"TEXT,"+COLUMN_IMAGE_COLOR+"TEXT,"+ COLUMN_IMAGE_TYPE+"TEXT," + COLUMN_IMAGE_PATTERN+"TEXT"+")";
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button add_clothes;
     Button your_clothes;
+    Button inspiration;
     Intent i;
     final static int CameraData = 0;
     DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         add_clothes.setOnClickListener(this);
         your_clothes  = (Button) findViewById(R.id.button_yourclothes);
         your_clothes.setOnClickListener(this);
+        inspiration  = (Button) findViewById(R.id.button_inspiration);
+        inspiration.setOnClickListener(this);
     }
 
     @Override
@@ -37,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(v.getId() == R.id.button_yourclothes){
             Intent intent = new Intent(getApplicationContext(), MyClothes.class);
+            startActivity(intent);
+        }
+        else if(v.getId() == R.id.button_inspiration){
+            Intent intent = new Intent(getApplicationContext(), InspirationActivity.class);
             startActivity(intent);
         }
     }
