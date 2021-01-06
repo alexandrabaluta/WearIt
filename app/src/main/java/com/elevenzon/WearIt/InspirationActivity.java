@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import me.relex.circleindicator.CircleIndicator;
 
 public class InspirationActivity extends AppCompatActivity {
@@ -43,12 +43,12 @@ public class InspirationActivity extends AppCompatActivity {
             }
         };
         //Auto start
-        Timer swipeTimer = new Timer();
+       /* Timer swipeTimer = new Timer();
         swipeTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.post(Update);
             }
-        }, 2500, 2500);
+        }, 2500, 2500);*/
     }
 }

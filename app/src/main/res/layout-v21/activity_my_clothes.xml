@@ -2,9 +2,8 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:visibility="visible"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.elevenzon.WearIt.MyClothes">
 
     <GridView
@@ -12,15 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="200dp"
-        android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
         android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center" >
-
-
-    </GridView>
+        app:layout_anchorGravity="center" />
 
     <include
         android:id="@+id/include"
@@ -32,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/inima1"
-        app:backgroundTint="#FFFFFF" />
+      android:backgroundTint="@android:color/holo_purple"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:srcCompat="@drawable/inima1" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +32,8 @@ public class MyClothes extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "WIP", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MyClothes.this, GenerateOutfitActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -49,10 +48,11 @@ public class MyClothes extends AppCompatActivity {
             i++;
         }
 
-        final Dialog previewDialog = new Dialog(MyClothes.this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-            previewDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        final Dialog previewDialog = new Dialog(MyClothes.this, android.R.style.Theme_Translucent);
+            previewDialog.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
             previewDialog.setCancelable(true);
             previewDialog.setContentView(R.layout.dialog_layout);
+            //previewDialog.setTitle();
             final ImageView iv = (ImageView) previewDialog.findViewById(R.id.iv_preview_image);
 
         photoGrid = (GridView)findViewById(R.id.PhotoGridView);
@@ -61,17 +61,22 @@ public class MyClothes extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bitmap prevImg = bmpList.get(position);
-                iv.setImageBitmap(prevImg);
-                previewDialog.show();
-                FloatingActionButton edit = findViewById(R.id.fab);
-                edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                            // redirect to EditClothesActivity
-                            Intent intent = new Intent(getApplicationContext(), EditClothesActivity.class);
-                            startActivity(intent);
-                        }
-                });
+                //iv.setImageBitmap(prevImg);
+                //ImagePreviewActivity imagePreviewActivity= new ImagePreviewActivity();
+                //get id of photo, then get tags from the database and put them in previewDialog
+                StringBuilder tagTitle = databaseHelper.getTagsAtID(position+1);
+                /**
+                 * The title here represents the tags for the photo !!
+                 */
+              //  imagePreviewActivity.addElement(tagTitle.toString(), prevImg);
+                //previewDialog.setTitle(tagTitle);
+                //previewDialog.show();
+                Intent intent1=new Intent(getApplicationContext(), ImagePreviewActivity.class);
+                intent1.putExtra("Tags", tagTitle.toString());
+                intent1.putExtra("Bitmap", prevImg);
+                startActivity(intent1);
+
+
 
             }
         });

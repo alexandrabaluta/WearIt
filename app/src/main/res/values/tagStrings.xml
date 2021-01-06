@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="color_tags">
+        <item>Red</item>
+        <item>White</item>
+        <item>Nude</item>
+        <item>Black</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Purple</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Pink</item>
+        <item>Brown</item>
+        <item>Turquoise</item>
+    </string-array>
+
+    <string-array name="pattern_tags">
+        <item>Stripes</item>
+        <item>Checks</item>
+        <item>Plaid</item>
+        <item>Multiple</item>
+        <item>Floral</item>
+        <item>Polka Dots</item>
+        <item>None</item>
+    </string-array>
+
+    <string-array name="type_tags">
+        <item>Dress</item>
+        <item>Top</item>
+        <item>Bag</item>
+        <item>Jeans</item>
+        <item>Hat</item>
+        <item>Skirt</item>
+        <item>Shoes</item>
+    </string-array>
+
+    <string-array name="season_tags">
+        <item>Spring</item>
+        <item>Summer</item>
+        <item>Autumn</item>
+        <item>Winter</item>
+    </string-array>
+</resources>

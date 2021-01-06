@@ -15,6 +15,8 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public int lastTableImageID = 0;
+
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -39,10 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGE_PATTERN="pattern";
 
 
-
-
-    private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB,"+
-            COLUMN_IMAGE_SEASON+"TEXT,"+COLUMN_IMAGE_COLOR+"TEXT,"+ COLUMN_IMAGE_TYPE+"TEXT," + COLUMN_IMAGE_PATTERN+"TEXT"+")";
+   private String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE +"(" + COLUMN_IMAGE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLUMN_IMAGE_ITEM + " BLOB,"+
+            COLUMN_IMAGE_SEASON+" TEXT,"+COLUMN_IMAGE_COLOR+" TEXT,"+ COLUMN_IMAGE_TYPE+" TEXT," + COLUMN_IMAGE_PATTERN+" TEXT"+")";
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
@@ -75,12 +75,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addImage(Bitmap bmp){
         byte[] data = getBitmapAsByteArray(bmp);
 
+
         SQLiteDatabase db = this.getWritableDatabase();
+        //db.execSQL(CREATE_IMAGE_TABLE);
+        //db.execSQL("DROP TABLE IF EXISTS "+TABLE_IMAGE);
+
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_IMAGE_ITEM, data);
+//        cv.put(COLUMN_IMAGE_COLOR, tag_color);
+//        cv.put(COLUMN_IMAGE_PATTERN, tag_pattern);
+//        cv.put(COLUMN_IMAGE_TYPE, tag_type);
+//        cv.put(COLUMN_IMAGE_SEASON, tag_season);
         db.insert(TABLE_IMAGE, null, cv);
+        lastTableImageID++;
         db.close();
         Log.d("testingTag", "Added to database!");
+    }
+
+    public void addTagsToImage(String tag_color, String tag_pattern, String tag_type, String tag_season){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_IMAGE_SEASON, tag_season);
+        cv.put(COLUMN_IMAGE_COLOR, tag_color);
+        cv.put(COLUMN_IMAGE_TYPE, tag_type);
+        cv.put(COLUMN_IMAGE_PATTERN, tag_pattern);
+
+        db.update(TABLE_IMAGE,cv,COLUMN_IMAGE_ID + " = ?", new String[]{String.valueOf(lastTableImageID)});
+
+        db.close();
     }
     public static byte[] getBitmapAsByteArray(Bitmap bitmap){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -109,6 +131,113 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return null ;
+    }
+
+    public Bitmap getMatch(int i, String color){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor curs = db.rawQuery("SELECT myImage FROM  storedImages   where imageid="+i+" AND color=?"  , new String [] {color});
+
+        if (curs.moveToFirst()){
+            byte[] imgByte = curs.getBlob(0);
+            curs.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (curs != null && !curs.isClosed()) {
+            curs.close();
+        }
+
+        return null ;
+    }
+
+    public Bitmap getMatchPattern(int i, String pattern){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor curs = db.rawQuery("SELECT myImage FROM  storedImages   where imageid="+i+" AND pattern=?"  , new String [] {pattern});
+
+        if (curs.moveToFirst()){
+            byte[] imgByte = curs.getBlob(0);
+            curs.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (curs != null && !curs.isClosed()) {
+            curs.close();
+        }
+
+        return null ;
+    }
+
+    public Bitmap getMatchSeason(int i, String season){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor curs = db.rawQuery("SELECT myImage FROM  storedImages   where imageid="+i+" AND season=?"  , new String [] {season});
+
+        if (curs.moveToFirst()){
+            byte[] imgByte = curs.getBlob(0);
+            curs.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (curs != null && !curs.isClosed()) {
+            curs.close();
+        }
+
+        return null ;
+    }
+
+    public Bitmap getMatchType(int i, String type){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor curs = db.rawQuery("SELECT myImage FROM  storedImages WHERE imageid="+i+" and type=? LIMIT 1"  , new String [] {type});
+
+        if (curs.moveToFirst()){
+            byte[] imgByte = curs.getBlob(0);
+            curs.close();
+            return BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+        }
+        if (curs != null && !curs.isClosed()) {
+            curs.close();
+        }
+
+        return null ;
+    }
+
+
+    public StringBuilder getTagsAtID(int i){
+        StringBuilder res = new StringBuilder();
+        SQLiteDatabase db = this.getWritableDatabase();
+        //we use the sql statement SELECT color, pattern, type, season FROM TABLE_IMAGE WHERE COLUMN_IMAGE_ID = i
+        String[] columns = {
+                COLUMN_IMAGE_COLOR,
+                COLUMN_IMAGE_PATTERN,
+                COLUMN_IMAGE_TYPE,
+                COLUMN_IMAGE_SEASON
+        };
+        String selection = COLUMN_IMAGE_ID + " = ?";
+
+        String selectionArgs[] = {String.valueOf(i)};
+
+        Cursor cursor = db.query(TABLE_IMAGE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+
+        if (cursor.moveToFirst()) {
+            res.append(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_COLOR)));
+            res.append(", ");
+            res.append(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATTERN)));
+            res.append(", ");
+            res.append(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_TYPE)));
+            res.append(", ");
+            res.append(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_SEASON)));
+        }
+        cursor.close();
+        db.close();
+
+        //return tag list
+        return res;
     }
     /**
      * This method is to create user record

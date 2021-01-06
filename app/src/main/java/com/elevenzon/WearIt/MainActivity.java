@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button inspiration;
     Intent i;
     final static int CameraData = 0;
+    final int GET_TEXT_REQUEST_CODE = 1;
     DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
     Bitmap bmp;
 
@@ -52,7 +53,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if(requestCode==GET_TEXT_REQUEST_CODE){
+            if(resultCode==RESULT_OK){
+                //do smth with text input
+                Bundle extrasTags = data.getExtras();
+                String color = (String) extrasTags.get("color");
+                String type = (String) extrasTags.get("type");
+                String pattern = (String) extrasTags.get("pattern");
+                String season = (String) extrasTags.get("season");
+
+                //add tags to photo
+                databaseHelper.addTagsToImage(color, pattern, type, season);
+            }
+        }
+
+        else if (resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             bmp = (Bitmap) data.getExtras().get("data");
             //iv.setImageBitmap(bmp);
@@ -80,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            databaseHelper.addImage(imagePath);
 
             databaseHelper.addImage(bmp);
+
+            Intent fillTagsIntent = new Intent(getApplicationContext(), PhotoTagActivity.class);
+            startActivityForResult(fillTagsIntent, GET_TEXT_REQUEST_CODE);
         }
     }
 }
